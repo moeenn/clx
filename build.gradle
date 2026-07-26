@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+application {
+    mainClass = 'com.clx.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    archiveVersion =  '0.0.1'
+    archiveBaseName = 'com.clx'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE'
+
+    manifest {
+        attributes['Main-Class'] = 'com.clx.Main'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    implementation "io.javalin:javalin:7.2.2"
+    implementation 'org.slf4j:slf4j-simple:2.0.17'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
+}

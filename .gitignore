@@ -1,0 +1,14 @@
+.classpath
+target
+.project
+.settings
+.idea
+.gradle
+build
+bin
+.vscode
+.idea
+gradlew
+gradlew.bat
+gradle
+downloads
