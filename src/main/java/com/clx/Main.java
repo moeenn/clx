@@ -2,10 +2,7 @@ package com.clx;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import com.clx.dto.BatchDownloadRequest;
-import com.clx.dto.ErrorResponse;
 import io.javalin.Javalin;
-import io.javalin.validation.ValidationException;
 
 public class Main {
     final static int PORT = 5000;
@@ -22,11 +19,6 @@ public class Main {
                 cors.addRule(it -> {
                     it.anyHost();
                 });
-            });
-
-            config.routes.exception(ValidationException.class, (e, ctx) -> {
-                var res = new ErrorResponse("validation error", e.getErrors());
-                ctx.status(400).json(res);
             });
 
             config.routes.post("/download", ctx -> {

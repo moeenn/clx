@@ -1,4 +1,4 @@
-package com.clx.dto;
+package com.clx;
 
 import java.util.List;
 
