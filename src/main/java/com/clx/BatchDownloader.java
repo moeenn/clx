@@ -7,12 +7,20 @@ import java.net.http.HttpResponse;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BatchDownloader {
+    final int MAX_PARALLEL = 4;
+    final ExecutorService exec;
+
+    public BatchDownloader() {
+        exec = Executors.newFixedThreadPool(MAX_PARALLEL);
+    }
+
     public void download(Path targetDir, List<String> urls) {
+        System.out.printf("[INFO] adding %d files\n", urls.size());
         var batchId = UUID.randomUUID().toString();
-        var exec = Executors.newVirtualThreadPerTaskExecutor();
         for (String u : urls) {
             exec.submit(() -> {
                 var filename = String.format("%s/%s-%s.jpg", targetDir.toString(), batchId, extractFilename(u));
