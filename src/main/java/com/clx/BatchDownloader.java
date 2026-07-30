@@ -13,11 +13,9 @@ import java.util.concurrent.Executors;
 public class BatchDownloader {
     final int MAX_PARALLEL = 4;
     final ExecutorService exec;
-    final ImageConverter conv;
 
-    public BatchDownloader(ImageConverter converter) {
+    public BatchDownloader() {
         exec = Executors.newFixedThreadPool(MAX_PARALLEL);
-        conv = converter;
     }
 
     public void download(Path targetDir, List<String> urls) {
@@ -28,7 +26,6 @@ public class BatchDownloader {
                 var filename = String.format("%s/%s-%s.jpg", targetDir.toString(), batchId, extractFilename(u));
                 try {
                     downloadFile(u, filename);
-                    conv.convert(filename);
                     System.out.printf("[DONE] %s\n", u);
                 } catch (Exception e) {
                     System.err.printf("[ERROR] %s: %s\n", u, e.getMessage());

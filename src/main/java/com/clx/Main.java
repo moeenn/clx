@@ -10,9 +10,7 @@ public class Main {
     static void run() throws Exception {
         Path targetDir = Path.of("./downloads");
         Files.createDirectories(targetDir);
-
-        var converter = new ImageConverter();
-        var downloader = new BatchDownloader(converter);
+        var downloader = new BatchDownloader();
 
         System.out.printf("[INFO] starting server: Port=%d\n", Main.PORT);
         var app = Javalin.create(config -> {
