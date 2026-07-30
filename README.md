@@ -13,32 +13,21 @@ $ gradle build
 $ java -jar ./build/libs/clx-0.0.1.jar
 ```
 
-### Scripts
+### Script
 
 ```js
-// MBTB
 (() => {
-	const selector = "dt a"
-	const urls = [...document.querySelectorAll(selector)].map(a => a.href)
-	fetch("http://localhost:5000/download", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ urls }),
-	})
-})()
-
-
-// PC
-(() => {
-	const urls = [...document.querySelectorAll(".article__gallery-images a")].map(a => a.href)
-	fetch("http://localhost:5000/download", {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ urls }),
-	})
+	const selectors = ["a.ss-image", ".article__gallery-images a", "dt a"]
+	for (const selector of selectors) {
+		const urls = [...document.querySelectorAll(selector)].map(a => a.href)		
+		if (!urls.length) continue
+		fetch("http://localhost:5000/download", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({urls}),
+		})
+	}
 })()
 ```
