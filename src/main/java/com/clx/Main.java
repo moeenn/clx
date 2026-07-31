@@ -23,6 +23,11 @@ public class Main {
 
             config.routes.post("/download", ctx -> {
                 var body = ctx.bodyAsClass(BatchDownloadRequest.class);
+                if (body.urls().size() == 0) {
+                    ctx.status(400);
+                    return;
+                }
+
                 downloader.download(targetDir, body.urls());
                 ctx.status(200);
             });
